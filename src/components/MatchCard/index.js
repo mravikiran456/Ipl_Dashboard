@@ -1,5 +1,3 @@
-// Write your code here
-// Write your code here
 import {Component} from 'react'
 
 import './index.css'
@@ -24,7 +22,7 @@ class MatchCard extends Component {
         <img
           src={competingTeamLogo}
           className="competing-team-logo"
-          alt={`competing-team ${competingTeam}`}
+          alt={`competing team ${competingTeam}`}
         />
         <p className="competing-team-name">{competingTeam}</p>
         <p className="result">{result}</p>

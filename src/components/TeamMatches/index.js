@@ -1,4 +1,3 @@
-// Write your code here
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 
@@ -23,20 +22,6 @@ class TeamMatches extends Component {
     this.setState({recentMatchesData: formattedData, isLoading})
   }
 
-  getFormattedObject = data => ({
-    umpires: data.umpires,
-    result: data.result,
-    manOfTheMatch: data.man_of_the_match,
-    id: data.id,
-    date: data.date,
-    venue: data.venue,
-    competingTeam: data.competing_team,
-    competingTeamLogo: data.competing_team_logo,
-    firstInnings: data.first_innings,
-    secondInnings: data.second_innings,
-    matchStatus: data.match_status,
-  })
-
   getRecentMatches = async () => {
     const {match} = this.props
     const {params} = match
@@ -46,12 +31,33 @@ class TeamMatches extends Component {
     const fetchedData = await response.json()
     const formattedData = {
       teamBannerURL: fetchedData.team_banner_url,
-      latestMatch: this.getFormattedObject(fetchedData.latest_match_details),
-      recentMatches: fetchedData.recent_matches.map(recentMatch =>
-        this.getFormattedObject(recentMatch),
-      ),
+      latestMatch: {
+        umpires: fetchedData.latest_match_details.umpires,
+        result: fetchedData.latest_match_details.result,
+        manOfTheMatch: fetchedData.latest_match_details.man_of_the_match,
+        id: fetchedData.latest_match_details.id,
+        date: fetchedData.latest_match_details.date,
+        venue: fetchedData.latest_match_details.venue,
+        competingTeam: fetchedData.latest_match_details.competing_team,
+        competingTeamLogo: fetchedData.latest_match_details.competing_team_logo,
+        firstInnings: fetchedData.latest_match_details.first_innings,
+        secondInnings: fetchedData.latest_match_details.second_innings,
+        matchStatus: fetchedData.latest_match_details.match_status,
+      },
+      recentMatches: fetchedData.recent_matches.map(recentMatch => ({
+        umpires: recentMatch.umpires,
+        result: recentMatch.result,
+        manOfTheMatch: recentMatch.man_of_the_match,
+        id: recentMatch.id,
+        date: recentMatch.date,
+        venue: recentMatch.venue,
+        competingTeam: recentMatch.competing_team,
+        competingTeamLogo: recentMatch.competing_team_logo,
+        firstInnings: recentMatch.first_innings,
+        secondInnings: recentMatch.second_innings,
+        matchStatus: recentMatch.match_status,
+      })),
     }
-
     this.setRecentMatches(formattedData, false)
   }
 
